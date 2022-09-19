@@ -1,0 +1,10 @@
+
+drupal_jwt_auth.settings:
+  path: '/admin/config/services/drupal-jw-auth'
+  defaults:
+    _form: 'Drupal\drupal_jwt_auth\Form\JWTSettingForm'
+    _title: 'Drupal JWT auth'
+  requirements:
+    _permission: 'administer site configuration'
+  options:
+    _admin_route: TRUE

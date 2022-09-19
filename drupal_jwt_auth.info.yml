@@ -1,0 +1,10 @@
+name: Drupal JWT authentication
+type: module
+description: This module provides JWT authentication for your drupal REST API.
+core_version_requirement: ^8 || ^9
+package: Web services
+configure: drupal_jwt_auth.settings
+dependencies:
+  - key:key
+  - drupal:user
+  - drupal:serialization

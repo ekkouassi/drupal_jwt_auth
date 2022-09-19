@@ -1,0 +1,16 @@
+secret_key: SECRET_KEY
+public_key: PUBLIC_KEY
+pass_phrase: PASSPHRASE
+token_ttl: 300
+user_identity_field: username
+token_extractors:
+  authorization_header:
+    enabled: true
+    prefix: Bearer
+    name: Authorization
+  cookie:
+    enabled: false
+    name: BEARER
+  query_parameter:
+    enabled: false
+    name: bearer

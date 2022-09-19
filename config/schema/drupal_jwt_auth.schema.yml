@@ -1,0 +1,56 @@
+drupal_jwt_authentication.settings:
+  type: config_object
+  label: 'JWT authentication config'
+  mapping:
+    secret_key:
+      type: string
+      label: 'JWT encoding private key'
+    public_key:
+      type: string
+      label: 'JWT encoding public'
+    pass_phrase:
+      type: string
+      label: 'JWT encoding pass phrase'
+    token_ttl:
+      type: integer
+      label: 'JWT token life time'
+    user_identity_field:
+      type: string
+      label: 'User login identity field'
+    token_extractors:
+      type: mapping
+      label: 'Authentication method mapping'
+      mapping:
+        authorization_header:
+          type: mapping
+          label: 'Header authentication method mapping'
+          mapping:
+            enabled:
+              type: boolean
+              label: 'Authentication in header is enabled or not'
+            prefix:
+              type: string
+              label: 'JWT token prefix in header'
+            name:
+              type: string
+              label: 'Authentication attribute name in header'
+        cookie:
+          type: mapping
+          label: 'Cookie authentication method mapping'
+          mapping:
+            enabled:
+              type: boolean
+              label: 'Authentication in header is enabled or not'
+            name:
+              type: string
+              label: 'Cookie attribute name'
+        query_parameter:
+          type: mapping
+          label: 'Query parameter authentication method mapping'
+          mapping:
+            enabled:
+              type: boolean
+              label: 'Authentication by cookie is enabled or not'
+            name:
+              type: string
+              label: 'Query parameter attribute name'

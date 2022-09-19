@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @author Ernest KOUASSI <ernestkouassi02@gmail.com>
+ * @file
+ * Install, update, and uninstall functions for the drupal jwt auth module.
+ */
+
+/**
+ * Implements hook_requirements().
+ */
+function jwt_requirements($phase) {
+  $requirements = [];
+  if ($phase === 'install') {
+    if (!class_exists('\Firebase\JWT\JWT')) {
+      $requirements['jwt_library'] = [
+        'description' => t('JWT Authentication requires the firebase/php-jwt library.'),
+        'severity' => REQUIREMENT_ERROR,
+      ];
+    }
+  }
+
+  return $requirements;
+}

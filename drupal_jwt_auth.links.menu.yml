@@ -1,0 +1,6 @@
+jwt_auth.settings:
+  title: 'drupal jwt auth'
+  route_name: drupal_jwt_auth.settings
+  description: 'Configured jwt based for customizing'
+  parent: system.admin_config_services
+

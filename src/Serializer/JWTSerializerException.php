@@ -11,7 +11,7 @@ use Firebase\JWT\ExpiredException;
  *
  * @package Drupal\jwt\Trancoder
  */
-class JwtDecodeException extends \Exception {
+class JWTSerializerException extends \Exception {
 
   const DOMAIN            = 1;
   const UNEXPECTED_VALUE  = 2;
@@ -26,29 +26,22 @@ class JwtDecodeException extends \Exception {
    * @param \Exception $e
    *   The exception to decode.
    *
-   * @return JwtDecodeException
+   * @return JWTSerializerException
    *   The decode exception.
    */
-  public static function newFromException(\Exception $e) {
+  public static function newFromException(\Exception $e): JWTSerializerException
+  {
     switch ($e) {
       case ($e instanceof SignatureInvalidException):
-        return new static($e->getMessage(), self::SIGNATURE_INVALID, $e);
-
+          return new static($e->getMessage(), self::SIGNATURE_INVALID, $e);
       case ($e instanceof BeforeValidException):
-        return new static($e->getMessage(), self::BEFORE_VALID, $e);
-
+          return new static($e->getMessage(), self::BEFORE_VALID, $e);
       case ($e instanceof ExpiredException):
-        return new static($e->getMessage(), self::EXPIRED, $e);
-        
+          return new static($e->getMessage(), self::EXPIRED, $e);
       case ($e instanceof \DomainException):
-        return new static($e->getMessage(), self::DOMAIN, $e);  
-
-      case ($e instanceof \Exception):
-        return new static('Internal Server Error', self::UNKNOWN, $e);
-
+          return new static($e->getMessage(), self::DOMAIN, $e);
       default:
-        return new static('Internal Server Error', self::UNKNOWN, $e);
+          return new static('Internal Server Error', self::UNKNOWN, $e);
     }
   }
-
 }

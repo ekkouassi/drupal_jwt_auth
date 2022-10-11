@@ -3,7 +3,7 @@
 namespace Drupal\jwt\Authentication\Provider;
 
 use Drupal\jwt\Transcoder\JwtTranscoderInterface;
-use Drupal\jwt\Transcoder\JwtDecodeException;
+use Drupal\jwt\Transcoder\JWTSerializerException;
 use Drupal\jwt\Authentication\Event\JwtAuthGenerateEvent;
 use Drupal\jwt\Authentication\Event\JwtAuthValidateEvent;
 use Drupal\jwt\Authentication\Event\JwtAuthValidEvent;
@@ -16,6 +16,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
+ * @author Ernest KOUASSI <ernestkouassi02@gmail.com>
+ *
  * JWT Authentication Provider.
  */
 class JwtAuth implements AuthenticationProviderInterface {
@@ -79,7 +81,7 @@ class JwtAuth implements AuthenticationProviderInterface {
     try {
       $jwt = $this->transcoder->decode($raw_jwt);
     }
-    catch (JwtDecodeException $e) {
+    catch (JWTSerializerException $e) {
       throw new AccessDeniedHttpException($e->getMessage(), $e);
     }
 

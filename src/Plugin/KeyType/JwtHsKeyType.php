@@ -8,6 +8,8 @@ use Drupal\key\Plugin\KeyTypeBase;
 use Drupal\key\Plugin\KeyPluginFormInterface;
 
 /**
+ * @author Ernest KOUASSI<ernestkouassi02@gmail.com>
+ *
  * Defines a key type for JWT HMAC Signatures.
  *
  * @KeyType(
@@ -25,7 +27,8 @@ class JwtHsKeyType extends KeyTypeBase implements KeyPluginFormInterface {
   /**
    * {@inheritdoc}
    */
-  public function defaultConfiguration() {
+  public function defaultConfiguration(): array
+  {
     return [
       'algorithm' => 'HS256',
     ];
@@ -34,8 +37,9 @@ class JwtHsKeyType extends KeyTypeBase implements KeyPluginFormInterface {
   /**
    * {@inheritdoc}
    */
-  public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
-    $algorithm_options = [
+  public function buildConfigurationForm(array $form, FormStateInterface $form_state): array
+  {
+    $algorithmOptions = [
       'HS256' => $this->t('HMAC using SHA-256 (HS256)'),
       'HS384' => $this->t('HMAC using SHA-384 (HS384)'),
       'HS512' => $this->t('HMAC using SHA-512 (HS512)'),
@@ -47,7 +51,7 @@ class JwtHsKeyType extends KeyTypeBase implements KeyPluginFormInterface {
       '#type' => 'select',
       '#title' => $this->t('JWT Algorithm'),
       '#description' => $this->t('The JWT Algorithm to use with this key.'),
-      '#options' => $algorithm_options,
+      '#options' => $algorithmOptions,
       '#default_value' => $algorithm,
       '#required' => TRUE,
     );
@@ -71,45 +75,36 @@ class JwtHsKeyType extends KeyTypeBase implements KeyPluginFormInterface {
   /**
    * {@inheritdoc}
    */
-  public static function generateKeyValue(array $configuration) {
-    $algorithm_keysize = self::getAlgorithmKeysize();
+  public static function generateKeyValue(array $configuration): string
+  {
+    $algorithmKeySize = self::getAlgorithmKeySize();
 
     $algorithm = $configuration['algorithm'];
 
-    if (!empty($algorithm) && isset($algorithm_keysize[$algorithm])) {
-      $bytes = $algorithm_keysize[$algorithm] / 8;
+    if (!empty($algorithm) && isset($algorithmKeySize[$algorithm])) {
+      $bytes = $algorithmKeySize[$algorithm] / 8;
     }
     else {
-      $bytes = $algorithm_keysize['HS256'] / 8;
+      $bytes = $algorithmKeySize['HS256'] / 8;
     }
-    $random_key = Crypt::randomBytes($bytes);
 
-    return $random_key;
+    return Crypt::randomBytesBase64($bytes);
   }
 
-  /**
-   * {@inheritdoc}
-   */
   public function validateKeyValue(array $form, FormStateInterface $form_state, $key_value) {
     if (!$form_state->getValue('algorithm')) {
       return;
     }
 
-    // Validate the key size.
     $algorithm = $form_state->getValue('algorithm');
-    $bytes = self::getAlgorithmKeysize()[$algorithm] / 8;
+    $bytes = self::getAlgorithmKeySize()[$algorithm] / 8;
     if (strlen($key_value) < $bytes) {
       $form_state->setErrorByName('algorithm', $this->t('Key size (%size bits) is too small for algorithm chosen. Algorithm requires a minimum of %required bits.', ['%size' => strlen($key_value) * 8, '%required' => $bytes * 8]));
     }
   }
 
-  /**
-   * Get keysizes for the various algorithms.
-   *
-   * @return array
-   *   An array key keysizes.
-   */
-  protected static function getAlgorithmKeysize() {
+  protected static function getAlgorithmKeySize(): array
+  {
     return [
       'HS256' => 512,
       'HS384' => 1024,

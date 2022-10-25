@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\jwt\Transcoder;
+namespace Drupal\drupal_jwt_auth\Serializer;
 
 use Firebase\JWT\SignatureInvalidException;
 use Firebase\JWT\BeforeValidException;

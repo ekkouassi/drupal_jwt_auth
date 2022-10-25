@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\jwt\Plugin\KeyType;
+namespace Drupal\drupal_jwt_auth\Plugin\KeyType;
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Component\Utility\Crypt;
@@ -22,7 +22,8 @@ use Drupal\key\Plugin\KeyPluginFormInterface;
  *   }
  * )
  */
-class JwtHsKeyType extends KeyTypeBase implements KeyPluginFormInterface {
+class JwtHsKeyType extends KeyTypeBase implements KeyPluginFormInterface
+{
 
   /**
    * {@inheritdoc}

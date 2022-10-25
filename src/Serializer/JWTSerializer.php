@@ -16,7 +16,7 @@ use Firebase\JWT\JWT;
 class JWTSerializer implements JWTSerializerInterface {
 
   /**
-   * The firebase/php-jwt transcoder.
+   * The firebase/php-jwt serializer.
    *
    * @var \Firebase\JWT\JWT
    */

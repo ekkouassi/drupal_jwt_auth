@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\jwt\Plugin\KeyType;
+namespace Drupal\drupal_jwt_auth\Plugin\KeyType;
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\key\Plugin\KeyTypeBase;
@@ -102,7 +102,6 @@ class JwtRsKeyType extends KeyTypeBase implements KeyPluginFormInterface {
       return;
     }
 
-    // Validate the key.
     $algorithm = $form_state->getValue('algorithm');
 
     $keyResource = openssl_pkey_get_private($key_value);
